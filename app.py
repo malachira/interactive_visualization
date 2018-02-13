@@ -95,8 +95,18 @@ def samples(sample):
             #convert columns to string to prevent "int64 is not JSON serializable" error
             sample_pd["otu_id"] = sample_pd["otu_id"].astype(str)
             sample_pd["num_samples"] = sample_pd["num_samples"].astype(str)
+
+            #After sorting, put the columns in list format(easier to slice)
+            otu_id_lst = list(sample_pd["otu_id"])
+            sample_val_lst = list(sample_pd["num_samples"])
+
+            sample_dict = {
+                "otu_id": otu_id_lst[:10],
+                "sample_values": sample_val_lst[:10],
+                "type": "pie"
+            }
             
-            return jsonify(sample_pd.to_dict(orient="records"))
+            return jsonify(sample_dict)
 
     return jsonify({"error": f"Sample with ID {sample} not found."}),404
 

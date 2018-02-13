@@ -1,32 +1,22 @@
 /* data route */
-var url = "/data";
+var url = "/samples/BB_940"
 
 function buildPlot() {
     Plotly.d3.json(url, function(error, response) {
 
         console.log(response);
+
         var trace1 = {
-            type: "scatter",
-            mode: "lines",
-            name: "Bigfoot Sightings",
-            x: response.map(data => data.months),
-            y: response.map(data => data.sightings),
-            line: {
-                color: "#17BECF"
-            }
+            type: "pie",
+            name: "OTUs in sample",
+            labels: response.otu_id,
+            values: response.sample_values
         };
 
         var data = [trace1];
 
         var layout = {
-            title: "Bigfoot Sightings Per Year",
-            xaxis: {
-                type: "date"
-            },
-            yaxis: {
-                autorange: true,
-                type: "linear"
-            }
+            title: "Top-10 OTU for Sample value"
         };
 
         Plotly.newPlot("plot", data, layout);
